@@ -1,0 +1,10 @@
+[MAPA67]
+Name=Bosque
+MusicNum=3-1
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=CIUDAD
+Restringir=No
+BackUp= 0
+Pk=0

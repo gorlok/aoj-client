@@ -1,0 +1,10 @@
+[MAPA64]
+Name=Lindos Este
+MusicNum=16-1
+MagiaSinefecto=0
+NoEncriptarMP=0
+Terreno=BOSQUE
+Zona=CAMPO
+Restringir=No
+BackUp= 1
+Pk=1
