@@ -243,22 +243,22 @@ Public LasActionBuy As Boolean
 Private lIndex As Byte
 
 Private Sub cantidad_Change()
-    If val(cantidad.Text) < 1 Then
+    If Val(cantidad.Text) < 1 Then
         cantidad.Text = 1
     End If
     
-    If val(cantidad.Text) > MAX_INVENTORY_OBJS Then
+    If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
         cantidad.Text = 1
     End If
     
     If lIndex = 0 Then
-        If List1(0).ListIndex <> -1 Then
+        If List1(0).listIndex <> -1 Then
             'El precio, cuando nos venden algo, lo tenemos que redondear para arriba.
-            Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).ListIndex + 1).Valor, val(cantidad.Text)) 'No mostramos numeros reales
+            Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
         End If
     Else
-        If List1(1).ListIndex <> -1 Then
-            Label1(1).Caption = CalculateBuyPrice(Inventario.Valor(List1(1).ListIndex + 1), val(cantidad.Text)) 'No mostramos numeros reales
+        If List1(1).listIndex <> -1 Then
+            Label1(1).Caption = CalculateBuyPrice(Inventario.Valor(List1(1).listIndex + 1), Val(cantidad.Text)) 'No mostramos numeros reales
         End If
     End If
 End Sub
@@ -272,18 +272,10 @@ End If
 End Sub
 
 Private Sub Command2_Click()
-    Call writeCommerceEnd
+    Call WriteCommerceEnd
 End Sub
 
 Private Sub Form_Load()
-Dim i As Long
-
-For i = 1 To MAX_INVENTORY_SLOTS
-    If Inventario.OBJIndex(i) <> 0 Then
-       frmComerciar.List1(1).AddItem Inventario.ItemName(i)
-    End If
-Next i
-
 'Cargamos la interfase
 Me.Picture = LoadPicture(App.path & "\Graficos\comerciar.jpg")
 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
@@ -344,38 +336,38 @@ error:
     MsgBox Err.Description, vbExclamation, "Error: " & Err.number
 End Function
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(Index).List(List1(Index).ListIndex) = "" Or _
-   List1(Index).ListIndex < 0 Then Exit Sub
+If List1(index).List(List1(index).listIndex) = "" Or _
+   List1(index).listIndex < 0 Then Exit Sub
 
 If Not IsNumeric(cantidad.Text) Or cantidad.Text = 0 Then Exit Sub
 
-Select Case Index
+Select Case index
     Case 0
         frmComerciar.List1(0).SetFocus
-        LastIndex1 = List1(0).ListIndex
+        LastIndex1 = List1(0).listIndex
         LasActionBuy = True
-        If UserGLD >= CalculateSellPrice(NPCInventory(List1(0).ListIndex + 1).Valor, val(cantidad.Text)) Then
-            Call WriteCommerceBuy(List1(0).ListIndex + 1, cantidad.Text)
+        If UserGLD >= CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) Then
+            Call WriteCommerceBuy(List1(0).listIndex + 1, cantidad.Text)
         Else
             AddtoRichTextBox frmMain.RecTxt, "No tenés suficiente oro.", 2, 51, 223, 1, 1
             Exit Sub
         End If
    
    Case 1
-        LastIndex2 = List1(1).ListIndex
+        LastIndex2 = List1(1).listIndex
         LasActionBuy = False
         
-        Call WriteCommerceSell(List1(1).ListIndex + 1, cantidad.Text)
+        Call WriteCommerceSell(List1(1).listIndex + 1, cantidad.Text)
 End Select
 
 End Sub
 
-Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case Index
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
                 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
@@ -386,7 +378,7 @@ Select Case Index
         
     Case 1
         If Image1(1).Tag = 1 Then
-'                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
+                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
                 Image1(1).Tag = 0
                 Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
                 Image1(0).Tag = 1
@@ -395,7 +387,7 @@ Select Case Index
 End Select
 End Sub
 
-Private Sub list1_Click(Index As Integer)
+Private Sub list1_Click(index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -408,59 +400,59 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-lIndex = Index
+lIndex = index
 
-Select Case Index
+Select Case index
     Case 0
         
-        Label1(0).Caption = NPCInventory(List1(0).ListIndex + 1).Name
-        Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).ListIndex + 1).Valor, val(cantidad.Text)) 'No mostramos numeros reales
-        Label1(2).Caption = NPCInventory(List1(0).ListIndex + 1).amount
+        Label1(0).Caption = NPCInventory(List1(0).listIndex + 1).Name
+        Label1(1).Caption = CalculateSellPrice(NPCInventory(List1(0).listIndex + 1).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
+        Label1(2).Caption = NPCInventory(List1(0).listIndex + 1).Amount
         
         If Label1(2).Caption <> 0 Then
         
-        Select Case NPCInventory(List1(0).ListIndex + 1).OBJType
+        Select Case NPCInventory(List1(0).listIndex + 1).OBJType
             Case eObjType.otWeapon
-                Label1(3).Caption = "Max Golpe:" & NPCInventory(List1(0).ListIndex + 1).MaxHit
-                Label1(4).Caption = "Min Golpe:" & NPCInventory(List1(0).ListIndex + 1).MinHit
+                Label1(3).Caption = "Max Golpe:" & NPCInventory(List1(0).listIndex + 1).MaxHit
+                Label1(4).Caption = "Min Golpe:" & NPCInventory(List1(0).listIndex + 1).MinHit
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case eObjType.otArmadura
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).ListIndex + 1).Def
+                Label1(4).Caption = "Defensa:" & NPCInventory(List1(0).listIndex + 1).Def
                 Label1(4).Visible = True
             Case Else
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
         
-        Call DrawGrhtoHdc(Picture1.hdc, NPCInventory(List1(0).ListIndex + 1).GrhIndex, SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, NPCInventory(List1(0).listIndex + 1).GrhIndex, SR, DR)
         
         End If
     
     Case 1
-        Label1(0).Caption = Inventario.ItemName(List1(1).ListIndex + 1)
-        Label1(1).Caption = CalculateBuyPrice(Inventario.Valor(List1(1).ListIndex + 1), val(cantidad.Text)) 'No mostramos numeros reales
-        Label1(2).Caption = Inventario.amount(List1(1).ListIndex + 1)
+        Label1(0).Caption = Inventario.ItemName(List1(1).listIndex + 1)
+        Label1(1).Caption = CalculateBuyPrice(Inventario.Valor(List1(1).listIndex + 1), Val(cantidad.Text)) 'No mostramos numeros reales
+        Label1(2).Caption = Inventario.Amount(List1(1).listIndex + 1)
         
         If Label1(2).Caption <> 0 Then
         
-        Select Case Inventario.OBJType(List1(1).ListIndex + 1)
+        Select Case Inventario.OBJType(List1(1).listIndex + 1)
             Case eObjType.otWeapon
-                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).ListIndex + 1)
-                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).ListIndex + 1)
+                Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).listIndex + 1)
+                Label1(4).Caption = "Min Golpe:" & Inventario.MinHit(List1(1).listIndex + 1)
                 Label1(3).Visible = True
                 Label1(4).Visible = True
             Case eObjType.otArmadura
                 Label1(3).Visible = False
-                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).ListIndex + 1)
+                Label1(4).Caption = "Defensa:" & Inventario.Def(List1(1).listIndex + 1)
                 Label1(4).Visible = True
             Case Else
                 Label1(3).Visible = False
                 Label1(4).Visible = False
         End Select
         
-        Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).ListIndex + 1), SR, DR)
+        Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).listIndex + 1), SR, DR)
         
         End If
         
@@ -480,7 +472,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1

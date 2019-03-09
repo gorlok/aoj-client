@@ -160,13 +160,13 @@ Private Sub Command2_Click()
     frmCantidad.Text1.Text = ""
 End Sub
 
-Private Sub Text1_Change()
+Private Sub text1_Change()
 On Error GoTo ErrHandler
-    If val(Text1.Text) < 0 Then
+    If Val(Text1.Text) < 0 Then
         Text1.Text = "1"
     End If
     
-    If val(Text1.Text) > MAX_INVENTORY_OBJS Then
+    If Val(Text1.Text) > MAX_INVENTORY_OBJS Then
         Text1.Text = "10000"
     End If
     

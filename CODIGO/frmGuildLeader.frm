@@ -278,24 +278,24 @@ Option Explicit
 Private Const MAX_NEWS_LENGTH As Integer = 512
 
 Private Sub cmdElecciones_Click()
-    'call writeGuildOpenElections
+    Call WriteGuildOpenElections
     Unload Me
 End Sub
 
 Private Sub Command1_Click()
-    If solicitudes.ListIndex = -1 Then Exit Sub
+    If solicitudes.listIndex = -1 Then Exit Sub
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembershipRequests
-    'call writeGuildMemberInfo(solicitudes.List(solicitudes.ListIndex))
+    Call WriteGuildMemberInfo(solicitudes.List(solicitudes.listIndex))
 
     'Unload Me
 End Sub
 
 Private Sub Command2_Click()
-    If members.ListIndex = -1 Then Exit Sub
+    If members.listIndex = -1 Then Exit Sub
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembers
-    'call writeGuildMemberInfo(members.List(members.ListIndex))
+    Call WriteGuildMemberInfo(members.List(members.listIndex))
 
     'Unload Me
 End Sub
@@ -305,12 +305,12 @@ Private Sub Command3_Click()
 
     k = Replace(txtguildnews, vbCrLf, "º")
     
-    'call writeGuildUpdateNews(k)
+    Call WriteGuildUpdateNews(k)
 End Sub
 
 Private Sub Command4_Click()
     frmGuildBrief.EsLeader = True
-    'call writeGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 
     'Unload Me
 End Sub
@@ -327,10 +327,10 @@ Call frmGuildURL.Show(vbModeless, frmGuildLeader)
 End Sub
 
 Private Sub Command7_Click()
-    'call writeGuildPeacePropList
+    Call WriteGuildPeacePropList
 End Sub
 Private Sub Command9_Click()
-    'call writeGuildAlliancePropList
+    Call WriteGuildAlliancePropList
 End Sub
 
 Private Sub Command8_Click()

@@ -149,18 +149,18 @@ End Sub
 Private Sub Command2_Click()
 'Me.Visible = False
 If tipoprop = PAZ Then
-    'call writeGuildPeaceDetails(lista.List(lista.ListIndex))
+    Call WriteGuildPeaceDetails(lista.List(lista.listIndex))
 Else
-    'call writeGuildAllianceDetails(lista.List(lista.ListIndex))
+    Call WriteGuildAllianceDetails(lista.List(lista.listIndex))
 End If
 End Sub
 
 Private Sub Command3_Click()
     'Me.Visible = False
     If tipoprop = PAZ Then
-        'call writeGuildAcceptPeace(lista.List(lista.ListIndex))
+        Call WriteGuildAcceptPeace(lista.List(lista.listIndex))
     Else
-        'call writeGuildAcceptAlliance(lista.List(lista.ListIndex))
+        Call WriteGuildAcceptAlliance(lista.List(lista.listIndex))
     End If
     Me.Hide
     Unload Me
@@ -168,9 +168,9 @@ End Sub
 
 Private Sub Command4_Click()
     If tipoprop = PAZ Then
-        'call writeGuildRejectPeace(lista.List(lista.ListIndex))
+        Call WriteGuildRejectPeace(lista.List(lista.listIndex))
     Else
-        'call writeGuildRejectAlliance(lista.List(lista.ListIndex))
+        Call WriteGuildRejectAlliance(lista.List(lista.listIndex))
     End If
     Me.Hide
     Unload Me

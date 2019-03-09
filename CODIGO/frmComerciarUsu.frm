@@ -282,14 +282,14 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdAceptar_Click()
-    'call writeUserCommerceOk
+    Call WriteUserCommerceOk
 End Sub
 
 Private Sub cmdOfrecer_Click()
 
 If optQue(0).value = True Then
-    If List1.ListIndex < 0 Then Exit Sub
-    If List1.ItemData(List1.ListIndex) <= 0 Then Exit Sub
+    If List1.listIndex < 0 Then Exit Sub
+    If List1.ItemData(List1.listIndex) <= 0 Then Exit Sub
     
 '    If Val(txtCant.Text) > List1.ItemData(List1.ListIndex) Or _
 '        Val(txtCant.Text) <= 0 Then Exit Sub
@@ -300,9 +300,9 @@ ElseIf optQue(1).value = True Then
 End If
 
 If optQue(0).value = True Then
-    'call writeUserCommerceOffer(List1.ListIndex + 1, val(txtCant.Text))
+    Call WriteUserCommerceOffer(List1.listIndex + 1, Val(txtCant.Text))
 ElseIf optQue(1).value = True Then
-    'call writeUserCommerceOffer(FLAGORO, val(txtCant.Text))
+    Call WriteUserCommerceOffer(FLAGORO, Val(txtCant.Text))
 Else
     Exit Sub
 End If
@@ -311,11 +311,11 @@ lblEstadoResp.Visible = True
 End Sub
 
 Private Sub cmdRechazar_Click()
-    'call writeUserCommerceReject
+    Call WriteUserCommerceReject
 End Sub
 
 Private Sub Command2_Click()
-    'call writeUserCommerceEnd
+    Call WriteUserCommerceEnd
 End Sub
 
 Private Sub Form_Deactivate()
@@ -338,8 +338,8 @@ Picture1.SetFocus
 End Sub
 
 Private Sub list1_Click()
-    If Inventario.GrhIndex(List1.ListIndex + 1) <> 0 Then
-        DibujaGrh Inventario.GrhIndex(List1.ListIndex + 1)
+    If Inventario.GrhIndex(List1.listIndex + 1) <> 0 Then
+        DibujaGrh Inventario.GrhIndex(List1.listIndex + 1)
     End If
 End Sub
 
@@ -361,9 +361,9 @@ Call DrawGrhtoHdc(Picture1.hdc, Grh, SR, DR)
 End Sub
 
 Private Sub List2_Click()
-If List2.ListIndex >= 0 And OtroInventario(List2.ListIndex + 1).GrhIndex <> 0 Then
-    DibujaGrh OtroInventario(List2.ListIndex + 1).GrhIndex
-    Label3.Caption = "Cantidad: " & List2.ItemData(List2.ListIndex)
+If List2.listIndex >= 0 And OtroInventario(List2.listIndex + 1).GrhIndex <> 0 Then
+    DibujaGrh OtroInventario(List2.listIndex + 1).GrhIndex
+    Label3.Caption = "Cantidad: " & List2.ItemData(List2.listIndex)
     cmdAceptar.Enabled = True
     cmdRechazar.Enabled = True
 Else
@@ -373,8 +373,8 @@ End If
 
 End Sub
 
-Private Sub optQue_Click(Index As Integer)
-Select Case Index
+Private Sub optQue_Click(index As Integer)
+Select Case index
 Case 0
     List1.Enabled = True
 Case 1
@@ -384,9 +384,9 @@ End Select
 End Sub
 
 Private Sub txtCant_Change()
-    If val(txtCant.Text) < 1 Then txtCant.Text = "1"
+    If Val(txtCant.Text) < 1 Then txtCant.Text = "1"
     
-    If val(txtCant.Text) > 2147483647 Then txtCant.Text = "2147483647"
+    If Val(txtCant.Text) > 2147483647 Then txtCant.Text = "2147483647"
 End Sub
 
 Private Sub txtCant_KeyDown(KeyCode As Integer, Shift As Integer)

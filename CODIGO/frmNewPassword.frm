@@ -89,6 +89,6 @@ Private Sub Command1_Click()
         Exit Sub
     End If
     
-    'call writeChangePassword(Text1.Text, Text2.Text)
+    Call WriteChangePassword(Text1.Text, Text2.Text)
     Unload Me
 End Sub

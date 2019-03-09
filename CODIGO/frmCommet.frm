@@ -130,11 +130,11 @@ If Text1 = "" Then
 End If
 
 If T = PAZ Then
-    'call writeGuildOfferPeace(Nombre, Replace(Text1, vbCrLf, "º"))
+    Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbCrLf, "º"))
 ElseIf T = ALIANZA Then
-    'call writeGuildOfferAlliance(Nombre, Replace(Text1, vbCrLf, "º"))
+    Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbCrLf, "º"))
 ElseIf T = RECHAZOPJ Then
-    'call writeGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
+    Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
     'Sacamos el char de la lista de aspirantes
     Dim i As Long
     For i = 0 To frmGuildLeader.solicitudes.ListCount - 1

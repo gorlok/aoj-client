@@ -352,6 +352,6 @@ Private Sub Command3_Click()
 End Sub
 
 Private Sub Guerra_Click()
-    'call writeGuildDeclareWar(Right(Nombre.Caption, Len(Nombre.Caption) - 7))
+    Call WriteGuildDeclareWar(Right(Nombre.Caption, Len(Nombre.Caption) - 7))
     Unload Me
 End Sub

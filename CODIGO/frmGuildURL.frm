@@ -90,8 +90,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-   ' If Text1 <> "" Then _
-        'call writeGuildNewWebsite(Text1)
+    If Text1 <> "" Then _
+        Call WriteGuildNewWebsite(Text1)
     
     Unload Me
 End Sub

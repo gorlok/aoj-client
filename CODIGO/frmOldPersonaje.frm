@@ -213,9 +213,12 @@ Select Case index
         UserName = NameTxt.Text
         Dim aux As String
         aux = PasswordTxt.Text
-
-        UserPassword = MD5String(aux)
-        
+#If SeguridadAlkon Then
+        UserPassword = MD5.GetMD5String(aux)
+        Call MD5.MD5Reset
+#Else
+        UserPassword = aux
+#End If
         If CheckUserData(False) = True Then
             EstadoLogin = Normal
             

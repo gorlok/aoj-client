@@ -123,7 +123,7 @@ Option Explicit
 
 Private Sub Command1_Click()
     frmGuildBrief.EsLeader = False
-    'call writeGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+    Call WriteGuildRequestDetails(guildslist.List(guildslist.listIndex))
 End Sub
 
 Private Sub Command3_Click()

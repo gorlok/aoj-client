@@ -74,28 +74,28 @@ On Error Resume Next
     
     arch = App.path & "\init\" & "armas.dat"
     
-    NumWeaponAnims = val(GetVar(arch, "INIT", "NumArmas"))
+    NumWeaponAnims = Val(GetVar(arch, "INIT", "NumArmas"))
     
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     
     For loopc = 1 To NumWeaponAnims
-        InitGrh WeaponAnimData(loopc).WeaponWalk(1), val(GetVar(arch, "ARMA" & loopc, "Dir1")), 0
-        InitGrh WeaponAnimData(loopc).WeaponWalk(2), val(GetVar(arch, "ARMA" & loopc, "Dir2")), 0
-        InitGrh WeaponAnimData(loopc).WeaponWalk(3), val(GetVar(arch, "ARMA" & loopc, "Dir3")), 0
-        InitGrh WeaponAnimData(loopc).WeaponWalk(4), val(GetVar(arch, "ARMA" & loopc, "Dir4")), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(1), Val(GetVar(arch, "ARMA" & loopc, "Dir1")), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(2), Val(GetVar(arch, "ARMA" & loopc, "Dir2")), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(3), Val(GetVar(arch, "ARMA" & loopc, "Dir3")), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(4), Val(GetVar(arch, "ARMA" & loopc, "Dir4")), 0
     Next loopc
 End Sub
 
 Sub CargarVersiones()
 On Error GoTo errorH:
 
-    Versiones(1) = val(GetVar(App.path & "\init\" & "versiones.ini", "Graficos", "Val"))
-    Versiones(2) = val(GetVar(App.path & "\init\" & "versiones.ini", "Wavs", "Val"))
-    Versiones(3) = val(GetVar(App.path & "\init\" & "versiones.ini", "Midis", "Val"))
-    Versiones(4) = val(GetVar(App.path & "\init\" & "versiones.ini", "Init", "Val"))
-    Versiones(5) = val(GetVar(App.path & "\init\" & "versiones.ini", "Mapas", "Val"))
-    Versiones(6) = val(GetVar(App.path & "\init\" & "versiones.ini", "E", "Val"))
-    Versiones(7) = val(GetVar(App.path & "\init\" & "versiones.ini", "O", "Val"))
+    Versiones(1) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Graficos", "Val"))
+    Versiones(2) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Wavs", "Val"))
+    Versiones(3) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Midis", "Val"))
+    Versiones(4) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Init", "Val"))
+    Versiones(5) = Val(GetVar(App.path & "\init\" & "versiones.ini", "Mapas", "Val"))
+    Versiones(6) = Val(GetVar(App.path & "\init\" & "versiones.ini", "E", "Val"))
+    Versiones(7) = Val(GetVar(App.path & "\init\" & "versiones.ini", "O", "Val"))
 Exit Sub
 
 errorH:
@@ -158,15 +158,15 @@ On Error Resume Next
     
     arch = App.path & "\init\" & "escudos.dat"
     
-    NumEscudosAnims = val(GetVar(arch, "INIT", "NumEscudos"))
+    NumEscudosAnims = Val(GetVar(arch, "INIT", "NumEscudos"))
     
     ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
     
     For loopc = 1 To NumEscudosAnims
-        InitGrh ShieldAnimData(loopc).ShieldWalk(1), val(GetVar(arch, "ESC" & loopc, "Dir1")), 0
-        InitGrh ShieldAnimData(loopc).ShieldWalk(2), val(GetVar(arch, "ESC" & loopc, "Dir2")), 0
-        InitGrh ShieldAnimData(loopc).ShieldWalk(3), val(GetVar(arch, "ESC" & loopc, "Dir3")), 0
-        InitGrh ShieldAnimData(loopc).ShieldWalk(4), val(GetVar(arch, "ESC" & loopc, "Dir4")), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(1), Val(GetVar(arch, "ESC" & loopc, "Dir1")), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(2), Val(GetVar(arch, "ESC" & loopc, "Dir2")), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(3), Val(GetVar(arch, "ESC" & loopc, "Dir3")), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(4), Val(GetVar(arch, "ESC" & loopc, "Dir4")), 0
     Next loopc
 End Sub
 
@@ -198,10 +198,6 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, ByVal Text As String, Opt
         
         RichTextBox.Refresh
     End With
-End Sub
-
-Public Sub asd(ByVal test As Byte)
- 
 End Sub
 
 'TODO : Never was sure this is really necessary....
@@ -380,8 +376,6 @@ Sub MoveTo(ByVal Direccion As E_Heading)
 ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
 ' 06/28/2008: NicoNZ - Saqué lo que impedía que si el usuario estaba paralizado se ejecute el sub.
 '***************************************************
-If UserMeditar Then Exit Sub
-
     Dim LegalOk As Boolean
     
     If Cartel Then Cartel = False
@@ -398,22 +392,21 @@ If UserMeditar Then Exit Sub
     End Select
     
     If LegalOk And Not UserParalizado Then
-        Call writeMoveTo(Direccion)
+        Call WriteWalk(Direccion)
         If Not UserDescansar And Not UserMeditar Then
             MoveCharbyHead UserCharIndex, Direccion
             MoveScreen Direccion
         End If
     Else
         If charlist(UserCharIndex).Heading <> Direccion Then
-            Call writeChangeHeading(Direccion)
+            Call WriteChangeHeading(Direccion)
         End If
     End If
     
+    If frmMain.macrotrabajo.Enabled Then frmMain.DesactivarMacroTrabajo
+    
     ' Update 3D sounds!
     Call Audio.MoveListener(UserPos.x, UserPos.y)
-    
-    If frmMain.t_TR.Enabled Then Call endWork
-    
 End Sub
 
 Sub RandomMove()
@@ -444,7 +437,7 @@ Private Sub CheckKeys()
     If pausa Then Exit Sub
     
     'Control movement interval (this enforces the 1 step loss when meditating / resting client-side)
-    If GetTickCount - lastMovement > 12 Then
+    If GetTickCount - lastMovement > 56 Then
         lastMovement = GetTickCount
     Else
         Exit Sub
@@ -455,6 +448,7 @@ Private Sub CheckKeys()
         If Not UserEstupido Then
             'Move Up
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyUp)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(NORTH)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
@@ -462,6 +456,7 @@ Private Sub CheckKeys()
             
             'Move Right
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyRight)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(EAST)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
@@ -469,6 +464,7 @@ Private Sub CheckKeys()
         
             'Move down
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyDown)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(SOUTH)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
@@ -476,6 +472,7 @@ Private Sub CheckKeys()
         
             'Move left
             If GetKeyState(CustomKeys.BindedKey(eKeyType.mKeyLeft)) < 0 Then
+                If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
                 Call MoveTo(WEST)
                 frmMain.Coord.Caption = "(" & UserMap & "," & UserPos.x & "," & UserPos.y & ")"
                 Exit Sub
@@ -497,134 +494,96 @@ Private Sub CheckKeys()
                 Call Audio.MoveListener(UserPos.x, UserPos.y)
             End If
             
+            If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
             frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
         End If
     End If
 End Sub
 
+'TODO : Si bien nunca estuvo allí, el mapa es algo independiente o a lo sumo dependiente del engine, no va acá!!!
 Sub SwitchMap(ByVal Map As Integer)
-      '**************************************************************
-      'Formato de mapas optimizado para reducir el espacio que ocupan.
-      'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
-      '**************************************************************
-
-      ' @@ Modificacion realizada por Facundo (GodKer), robada por Marcos.. ?
-      ' @@ 06/11/2014
-      ' @@ Facu cabe aporte (?)
-
-      Dim y         As Long
-      Dim x         As Long
-      Dim tempint   As Integer
-      Dim ByFlags   As Byte
-      Dim handle    As Integer
-      Dim fileBuff  As clsByteBuffer
-   
-      Dim dData()   As Byte
-      Dim dLen      As Long
-   
-      Set fileBuff = New clsByteBuffer
-   
-      dLen = FileLen(DirMapas & "Mapa" & Map & ".map")
-      ReDim dData(dLen - 1)
-   
-      handle = FreeFile()
-   
-      Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
-      'Seek handle, 1
-      Get handle, , dData
-      Close handle
-     
-      fileBuff.initializeReader dData
-   
-      'map Header
-      'Get handle, , MapInfo.MapVersion
-      MapInfo.MapVersion = fileBuff.getInteger
-   
-      MiCabecera.desc = fileBuff.getString(Len(MiCabecera.desc))
-      MiCabecera.CRC = fileBuff.getLong
-      MiCabecera.MagicWord = fileBuff.getLong
-   
-      'Get handle, , MiCabecera
-      'Get handle, , tempint
-      'Get handle, , tempint
-      'Get handle, , tempint
-      'Get handle, , tempint
-   
-      fileBuff.getDouble
-   
-      'Load arrays
-
-      For y = YMinMapSize To YMaxMapSize
-            For x = XMinMapSize To XMaxMapSize
-                  'Get handle, , ByFlags
-                  ByFlags = fileBuff.getByte()
-           
-                  MapData(x, y).Blocked = (ByFlags And 1)
-           
-                  'Get handle, , MapData(X, Y).Graphic(1).GrhIndex
-                  MapData(x, y).Graphic(1).GrhIndex = fileBuff.getInteger()
-                  InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
-           
-                  'Layer 2 used?
-
-                  If ByFlags And 2 Then
-                        'Get handle, , MapData(X, Y).Graphic(2).GrhIndex
-                        MapData(x, y).Graphic(2).GrhIndex = fileBuff.getInteger()
-                        InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
-                  Else
-                        MapData(x, y).Graphic(2).GrhIndex = 0
-                  End If
-               
-                  'Layer 3 used?
-
-                  If ByFlags And 4 Then
-                        'Get handle, , MapData(X, Y).Graphic(3).GrhIndex
-                        MapData(x, y).Graphic(3).GrhIndex = fileBuff.getInteger()
-                        InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
-                  Else
-                        MapData(x, y).Graphic(3).GrhIndex = 0
-                  End If
-               
-                  'Layer 4 used?
-
-                  If ByFlags And 8 Then
-                        'Get handle, , MapData(X, Y).Graphic(4).GrhIndex
-                        MapData(x, y).Graphic(4).GrhIndex = fileBuff.getInteger()
-                        InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
-                  Else
-                        MapData(x, y).Graphic(4).GrhIndex = 0
-                  End If
-           
-                  'Trigger used?
-
-                  If ByFlags And 16 Then
-                        'Get handle, , MapData(X, Y).Trigger
-                        MapData(x, y).Trigger = fileBuff.getInteger()
-                  Else
-                        MapData(x, y).Trigger = 0
-                  End If
-           
-                  'Erase NPCs
-
-                  If MapData(x, y).CharIndex > 0 Then
-                        Call EraseChar(MapData(x, y).CharIndex)
-                  End If
-           
-                  'Erase OBJs
-                  MapData(x, y).ObjGrh.GrhIndex = 0
-
-            Next x
-      Next y
-
-      'Close handle
-     
-      Set fileBuff = Nothing ' @@ Tanto te costaba Destruir el buff una ves que se termino de usar?
-   
-      MapInfo.Name = vbNullString
-      MapInfo.Music = vbNullString
-   
-      CurMap = Map
+'**************************************************************
+'Formato de mapas optimizado para reducir el espacio que ocupan.
+'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
+'**************************************************************
+    Dim y As Long
+    Dim x As Long
+    Dim tempint As Integer
+    Dim ByFlags As Byte
+    Dim handle As Integer
+    
+    handle = FreeFile()
+    
+    Open DirMapas & "Mapa" & Map & ".map" For Binary As handle
+    Seek handle, 1
+            
+    'map Header
+    Get handle, , MapInfo.MapVersion
+    Get handle, , MiCabecera
+    Get handle, , tempint
+    Get handle, , tempint
+    Get handle, , tempint
+    Get handle, , tempint
+    
+    'Load arrays
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
+            Get handle, , ByFlags
+            
+            MapData(x, y).Blocked = (ByFlags And 1)
+            
+            Get handle, , MapData(x, y).Graphic(1).GrhIndex
+            InitGrh MapData(x, y).Graphic(1), MapData(x, y).Graphic(1).GrhIndex
+            
+            'Layer 2 used?
+            If ByFlags And 2 Then
+                Get handle, , MapData(x, y).Graphic(2).GrhIndex
+                InitGrh MapData(x, y).Graphic(2), MapData(x, y).Graphic(2).GrhIndex
+            Else
+                MapData(x, y).Graphic(2).GrhIndex = 0
+            End If
+                
+            'Layer 3 used?
+            If ByFlags And 4 Then
+                Get handle, , MapData(x, y).Graphic(3).GrhIndex
+                InitGrh MapData(x, y).Graphic(3), MapData(x, y).Graphic(3).GrhIndex
+            Else
+                MapData(x, y).Graphic(3).GrhIndex = 0
+            End If
+                
+            'Layer 4 used?
+            If ByFlags And 8 Then
+                Get handle, , MapData(x, y).Graphic(4).GrhIndex
+                InitGrh MapData(x, y).Graphic(4), MapData(x, y).Graphic(4).GrhIndex
+            Else
+                MapData(x, y).Graphic(4).GrhIndex = 0
+            End If
+            
+            'Trigger used?
+            If ByFlags And 16 Then
+                Get handle, , MapData(x, y).Trigger
+            Else
+                MapData(x, y).Trigger = 0
+            End If
+            
+            'Erase NPCs
+            If MapData(x, y).CharIndex > 0 Then
+                Call EraseChar(MapData(x, y).CharIndex)
+            End If
+            
+            'Erase OBJs
+            MapData(x, y).ObjGrh.GrhIndex = 0
+        Next x
+    Next y
+    
+    Close handle
+    
+    MapInfo.Name = ""
+    MapInfo.Music = ""
+    
+    CurMap = Map
 End Sub
+
 Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As Byte) As String
 '*****************************************************************
 'Gets a field from a delimited string
@@ -675,7 +634,7 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
 End Function
 
 Function FileExist(ByVal file As String, ByVal FileType As VbFileAttribute) As Boolean
-    FileExist = (dir$(file, FileType) <> "")
+    FileExist = (Dir$(file, FileType) <> "")
 End Function
 
 Sub WriteClientVer()
@@ -718,7 +677,7 @@ On Error GoTo errorH
     Dim i As Long
     
     f = App.path & "\init\sinfo.dat"
-    c = val(GetVar(f, "INIT", "Cant"))
+    c = Val(GetVar(f, "INIT", "Cant"))
     
     ReDim ServersLst(1 To c) As tServerInfo
     For i = 1 To c
@@ -783,12 +742,12 @@ Public Function CurServerPort() As Integer
     If CurServer <> 0 Then
         CurServerPort = ServersLst(CurServer).Puerto
     Else
-        CurServerPort = val(frmConnect.PortTxt)
+        CurServerPort = Val(frmConnect.PortTxt)
     End If
 End Function
 
 Sub Main()
-    'call writeClientVer
+    Call WriteClientVer
     
     'Load config file
     If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
@@ -808,6 +767,12 @@ Sub Main()
         'Use dynamic by default
         Set SurfaceDB = New clsSurfaceManDyn
     End If
+    
+    '-GORLOK
+    'If FindPreviousInstance Then
+    '    Call MsgBox("Argentum Online ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
+    '    End
+    'End If
     
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
@@ -858,7 +823,7 @@ Sub Main()
     Call InicializarNombres
     
     ' Initialize FONTTYPES
-    'Call Protocol.InitFonts
+    Call Protocol.InitFonts
     
     frmOldPersonaje.NameTxt.Text = Config_Inicio.Name
     frmOldPersonaje.PasswordTxt.Text = ""
@@ -867,16 +832,13 @@ Sub Main()
     
     AddtoRichTextBox frmCargando.status, "Iniciando motor gráfico... ", 0, 0, 0, 0, 0, 1
     
-    If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.016) Then
+    If Not InitTileEngine(frmMain.hWnd, 160, 7, 32, 32, 13, 17, 9, 8, 8, 0.018) Then
         Call CloseClient
     End If
     
     AddtoRichTextBox frmCargando.status, "Hecho", , , , 1
     
     Call AddtoRichTextBox(frmCargando.status, "Creando animaciones extra... ", , , , , , 1)
-    
-    Set incomingData = New clsByteQueue
-    Set outgoingData = New clsByteQueue
     
     Call CargarTips
     
@@ -918,8 +880,8 @@ UserMap = 1
     Unload frmCargando
     
 
-   ' frmPres.Picture = LoadPicture(App.path & "\Graficos\GS-Zone.jpg")
-   ' frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
+    frmPres.Picture = LoadPicture(App.path & "\Graficos\GS-Zone.jpg")
+    frmPres.Show vbModal    'Es modal, así que se detiene la ejecución de Main hasta que se desaparece
     
 #If UsarWrench = 1 Then
     frmMain.Socket1.Startup
@@ -942,6 +904,9 @@ UserMap = 1
     Call MainTimer.SetInterval(TimersIndex.Arrows, INT_ARROWS)
     Call MainTimer.SetInterval(TimersIndex.CastAttack, INT_CAST_ATTACK)
     
+    frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
+    frmMain.macrotrabajo.Enabled = False
+    
    'Init timers
     Call MainTimer.Start(TimersIndex.Attack)
     Call MainTimer.Start(TimersIndex.Work)
@@ -961,7 +926,6 @@ UserMap = 1
     Call Load(frmScreenshots)
     
     Do While prgRun
-    
         'Sólo dibujamos si la ventana no está minimizada
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
@@ -981,11 +945,11 @@ UserMap = 1
 #If SeguridadAlkon Then
         Call CheckSecurity
 #End If
-
-        Call FlushBuffer
-    
-        DoEvents
         
+        ' If there is anything to be sent, we send it
+        Call FlushBuffer
+        
+        DoEvents
     Loop
     
     Call CloseClient
@@ -1125,7 +1089,7 @@ On Error GoTo error
     If Not UpToDate Then
         'No recibe update, ejecutar AU
         'Ejecuto el AoUpdate, sino me voy
-        If dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
+        If Dir(App.path & "\AoUpdate.exe", vbArchive) = vbNullString Then
             MsgBox "No se encuentra el archivo de actualización AoUpdate.exe por favor descarguelo y vuelva a intentar", vbCritical
             End
         Else
@@ -1319,10 +1283,3 @@ If buf > 0 Then
 End If
 getTagPosition = Len(Nick) + 2
 End Function
-
-Public Sub endWork()
-       macroL = 0
-       frmMain.t_TR.Enabled = False
-       frmMain.MousePointer = vbNormal
-       Call AddtoRichTextBox(frmMain.RecTxt, "Macro de trabajo desactivado", 100, 100, 120, 0, 0)
-End Sub

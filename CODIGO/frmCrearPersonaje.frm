@@ -903,7 +903,7 @@ If UserRaza = 0 Then
     Exit Function
 End If
 
-If Len(lstGenero.Text) < 1 Then
+If UserSexo = 0 Then
     MsgBox "Seleccione el sexo del personaje."
     Exit Function
 End If
@@ -915,6 +915,11 @@ End If
 
 If UserHogar = 0 Then
     MsgBox "Seleccione el hogar del personaje."
+    Exit Function
+End If
+
+If SkillPoints > 0 Then
+    MsgBox "Asigne los skillpoints del personaje."
     Exit Function
 End If
 
@@ -958,14 +963,14 @@ Private Sub boton_Click(index As Integer)
             End If
             
             UserRaza = lstRaza.ListIndex + 1
-            UserSexo = lstGenero.ListIndex '+ 1
+            UserSexo = lstGenero.ListIndex + 1
             UserClase = lstProfesion.ListIndex + 1
             
-            UserAtributos(1) = val(lbFuerza.Caption)
-            UserAtributos(2) = val(lbInteligencia.Caption)
-            UserAtributos(3) = val(lbAgilidad.Caption)
-            UserAtributos(4) = val(lbCarisma.Caption)
-            UserAtributos(5) = val(lbConstitucion.Caption)
+            UserAtributos(1) = Val(lbFuerza.Caption)
+            UserAtributos(2) = Val(lbInteligencia.Caption)
+            UserAtributos(3) = Val(lbAgilidad.Caption)
+            UserAtributos(4) = Val(lbCarisma.Caption)
+            UserAtributos(5) = Val(lbConstitucion.Caption)
             
             UserHogar = lstHogar.ListIndex + 1
             
@@ -998,7 +1003,7 @@ If RandomNumber > UpperBound Then RandomNumber = UpperBound
 End Function
 
 Private Sub TirarDados()
-    writeTirDad
+    Call WriteThrowDices
     Call FlushBuffer
 End Sub
 
@@ -1009,15 +1014,15 @@ Dim indice
 If (index And &H1) = 0 Then
     If SkillPoints > 0 Then
         indice = index \ 2
-        Skill(indice).Caption = val(Skill(indice).Caption) + 1
+        Skill(indice).Caption = Val(Skill(indice).Caption) + 1
         SkillPoints = SkillPoints - 1
     End If
 Else
     If SkillPoints < 10 Then
         
         indice = index \ 2
-        If val(Skill(indice).Caption) > 0 Then
-            Skill(indice).Caption = val(Skill(indice).Caption) - 1
+        If Val(Skill(indice).Caption) > 0 Then
+            Skill(indice).Caption = Val(Skill(indice).Caption) - 1
             SkillPoints = SkillPoints + 1
         End If
     End If

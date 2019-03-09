@@ -105,7 +105,7 @@ Option Explicit
 Dim CName As String
 
 Private Sub Command1_Click()
-    'call writeGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbCrLf, "º"))
+    Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbCrLf, "º"))
 
     Unload Me
 End Sub

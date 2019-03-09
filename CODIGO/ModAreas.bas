@@ -68,4 +68,3 @@ Public Sub CambioDeArea(ByVal x As Byte, ByVal y As Byte)
     
     Call RefreshAllChars
 End Sub
-

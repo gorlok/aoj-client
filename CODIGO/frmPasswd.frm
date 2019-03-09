@@ -220,10 +220,10 @@ Private Sub Command1_Click()
 
 If CheckDatos() Then
 #If SeguridadAlkon Then
-    UserPassword = md5.GetMD5String(txtPasswd.Text)
-    Call md5.MD5Reset
+    UserPassword = MD5.GetMD5String(txtPasswd.Text)
+    Call MD5.MD5Reset
 #Else
-        UserPassword = MD5String(txtPasswd.Text)
+    UserPassword = txtPasswd.Text
 #End If
     UserEmail = txtCorreo.Text
     

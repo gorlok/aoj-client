@@ -147,7 +147,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-    'call writeTrain(lstCriaturas.ListIndex + 1)
+    Call WriteTrain(lstCriaturas.listIndex + 1)
     Unload Me
 End Sub
 

@@ -33,12 +33,6 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
-Public ATSecurity As Boolean
-
-Public macroL As Byte 'macro (L = factor trabajo)
-Public Const HACHA_LEÑADOR As Byte = 127
-Public Const OBJTYPE_HERRAMIENTA As Byte = 18
-
 'Objetos públicos
 Public DialogosClanes As New clsGuildDlg
 Public Dialogos As New clsDialogs
@@ -356,11 +350,11 @@ Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER As String = " en la pierna derec
 Public Const MENSAJE_PRODUCE_IMPACTO_TORSO As String = " en el torso por "
 
 Public Const MENSAJE_TRABAJO_MAGIA As String = "Haz click sobre el objetivo..."
-Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar para comenzar a trabajar"
+Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar..."
 Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
-Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol para comenzar a trabajar"
-Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento para comenzar a trabajar."
-Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua para comenzar a trabajar"
+Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
+Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
+Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
 Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la victima..."
 
 Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
@@ -374,7 +368,7 @@ Type Inventory
     Name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
-    amount As Long
+    Amount As Long
     '[/Alejo]
     Equipped As Byte
     Valor As Single
@@ -388,7 +382,7 @@ Type NpCinV
     OBJIndex As Integer
     Name As String
     GrhIndex As Integer
-    amount As Integer
+    Amount As Integer
     Valor As Single
     OBJType As Integer
     Def As Integer
@@ -602,11 +596,11 @@ Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (By
 
 'Lista de cabezas
 Public Type tIndiceCabeza
-    head(1 To 4) As Integer
+    Head(1 To 4) As Integer
 End Type
 
 Public Type tIndiceCuerpo
-    body(1 To 4) As Integer
+    Body(1 To 4) As Integer
     HeadOffsetX As Integer
     HeadOffsetY As Integer
 End Type

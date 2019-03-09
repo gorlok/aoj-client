@@ -119,7 +119,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
-    'call writeSpawnCreature(lstCriaturas.ListIndex + 1)
+    Call WriteSpawnCreature(lstCriaturas.listIndex + 1)
 End Sub
 
 Private Sub Command2_Click()

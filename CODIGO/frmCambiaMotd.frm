@@ -183,7 +183,7 @@ Private Sub cmdOk_Click()
         End If
     Next i
     
-    'call writeSetMOTD(txtMotd.Text)
+    Call WriteSetMOTD(txtMotd.Text)
     Unload Me
 End Sub
 

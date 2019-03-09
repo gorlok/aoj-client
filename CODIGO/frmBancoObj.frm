@@ -16,14 +16,6 @@ Begin VB.Form frmBancoObj
    ScaleWidth      =   462
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   255
-      Left            =   3480
-      TabIndex        =   10
-      Top             =   840
-      Width           =   495
-   End
    Begin VB.TextBox cantidad 
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -263,11 +255,11 @@ Public NoPuedeMover As Boolean
 
 Private Sub cantidad_Change()
 
-If val(cantidad.Text) < 1 Then
+If Val(cantidad.Text) < 1 Then
     cantidad.Text = 1
 End If
 
-If val(cantidad.Text) > MAX_INVENTORY_OBJS Then
+If Val(cantidad.Text) > MAX_INVENTORY_OBJS Then
     cantidad.Text = 1
 End If
 
@@ -281,25 +273,25 @@ If (KeyAscii <> 8) Then
 End If
 End Sub
 
-Private Sub CmdMoverBov_Click(Index As Integer)
+Private Sub CmdMoverBov_Click(index As Integer)
 If List1(0).ListIndex = -1 Then Exit Sub
 
 If NoPuedeMover Then Exit Sub
 
-Select Case Index
+Select Case index
     Case 1 'subir
         If List1(0).ListIndex <= 0 Then
-         '   With FontTypes(FontTypeNames.FONTTYPE_INFO)
-           '     Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
-           ' End With
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
+            End With
             Exit Sub
         End If
         LastIndex1 = List1(0).ListIndex - 1
     Case 0 'bajar
         If List1(0).ListIndex >= List1(0).ListCount - 1 Then
-          '  With FontTypes(FontTypeNames.FONTTYPE_INFO)
-           '     Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
-           ' End With
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("No puedes mover el objeto en esa dirección.", .red, .green, .blue, .bold, .italic)
+            End With
             Exit Sub
         End If
         LastIndex1 = List1(0).ListIndex + 1
@@ -308,15 +300,11 @@ End Select
 NoPuedeMover = True
 LasActionBuy = True
 LastIndex2 = List1(1).ListIndex
-'call writeMoveBank(Index, List1(0).ListIndex + 1)
-End Sub
-
-Private Sub Command1_Click()
-MsgBox UserBancoInventory(1).Name
+Call WriteMoveBank(index, List1(0).ListIndex + 1)
 End Sub
 
 Private Sub Command2_Click()
-    writeEndBank
+    Call WriteBankEnd
     NoPuedeMover = False
 End Sub
 
@@ -347,53 +335,52 @@ If Image1(1).Tag = 0 Then
 End If
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
-If List1(Index).List(List1(Index).ListIndex) = "" Or _
-   List1(Index).ListIndex < 0 Then Exit Sub
+If List1(index).List(List1(index).ListIndex) = "" Or _
+   List1(index).ListIndex < 0 Then Exit Sub
 
 If Not IsNumeric(cantidad.Text) Then Exit Sub
 
-Select Case Index
+Select Case index
     Case 0
+        frmBancoObj.List1(0).SetFocus
         LastIndex1 = List1(0).ListIndex
         LasActionBuy = True
-        Call writeBuyBank(List1(0).ListIndex + 1, cantidad.Text)
+        Call WriteBankExtractItem(List1(0).ListIndex + 1, cantidad.Text)
         
    Case 1
         LastIndex2 = List1(1).ListIndex
         LasActionBuy = False
-        Call writeSellBank(List1(1).ListIndex + 1, cantidad.Text)
+        Call WriteBankDeposit(List1(1).ListIndex + 1, cantidad.Text)
 End Select
-
-
 
 End Sub
 
-Private Sub Image1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
-Select Case Index
+Private Sub Image1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Select Case index
     Case 0
         If Image1(0).Tag = 1 Then
-               ' Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
+                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprarApretado.jpg")
                 Image1(0).Tag = 0
-               ' Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
+                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
                 Image1(1).Tag = 1
         End If
         
     Case 1
         If Image1(1).Tag = 1 Then
-'                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
+                Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvenderapretado.jpg")
                 Image1(1).Tag = 0
-             '   Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
+                Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
                 Image1(0).Tag = 1
         End If
         
 End Select
 End Sub
 
-Private Sub list1_Click(Index As Integer)
+Private Sub list1_Click(index As Integer)
 Dim SR As RECT, DR As RECT
 
 SR.Left = 0
@@ -406,10 +393,10 @@ DR.Top = 0
 DR.Right = 32
 DR.Bottom = 32
 
-Select Case Index
+Select Case index
     Case 0
         Label1(0).Caption = UserBancoInventory(List1(0).ListIndex + 1).Name
-        Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).amount
+        Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).Amount
         Select Case UserBancoInventory(List1(0).ListIndex + 1).OBJType
             Case 2
                 Label1(3).Caption = "Max Golpe:" & UserBancoInventory(List1(0).ListIndex + 1).MaxHit
@@ -425,11 +412,11 @@ Select Case Index
                 Label1(4).Visible = False
         End Select
         
-        If UserBancoInventory(List1(0).ListIndex + 1).amount <> 0 Then _
+        If UserBancoInventory(List1(0).ListIndex + 1).Amount <> 0 Then _
             Call DrawGrhtoHdc(Picture1.hdc, UserBancoInventory(List1(0).ListIndex + 1).GrhIndex, SR, DR)
     Case 1
         Label1(0).Caption = Inventario.ItemName(List1(1).ListIndex + 1)
-        Label1(2).Caption = Inventario.amount(List1(1).ListIndex + 1)
+        Label1(2).Caption = Inventario.Amount(List1(1).ListIndex + 1)
         Select Case Inventario.OBJType(List1(1).ListIndex + 1)
             Case 2
                 Label1(3).Caption = "Max Golpe:" & Inventario.MaxHit(List1(1).ListIndex + 1)
@@ -445,7 +432,7 @@ Select Case Index
                 Label1(4).Visible = False
         End Select
         
-        If Inventario.amount(List1(1).ListIndex + 1) <> 0 Then _
+        If Inventario.Amount(List1(1).ListIndex + 1) <> 0 Then _
             Call DrawGrhtoHdc(Picture1.hdc, Inventario.GrhIndex(List1(1).ListIndex + 1), SR, DR)
 End Select
 
@@ -462,7 +449,7 @@ End Sub
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
 '<-------------------------NUEVO-------------------------->
-Private Sub List1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseMove(index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Image1(0).Tag = 0 Then
     Image1(0).Picture = LoadPicture(App.path & "\Graficos\BotónComprar.jpg")
     Image1(0).Tag = 1
@@ -470,13 +457,5 @@ End If
 If Image1(1).Tag = 0 Then
     Image1(1).Picture = LoadPicture(App.path & "\Graficos\Botónvender.jpg")
     Image1(1).Tag = 1
-End If
-End Sub
-
-Public Sub refreshAmount()
-If Len(List1(0).Text) > 0 Then
-   Label1(2).Caption = UserBancoInventory(List1(0).ListIndex + 1).amount
-Else
-   Label1(2).Caption = Inventario.amount(List1(0).ListIndex + 1)
 End If
 End Sub

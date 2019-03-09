@@ -1245,17 +1245,17 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub Command1_Click(Index As Integer)
+Private Sub Command1_Click(index As Integer)
 
 Call Audio.PlayWave(SND_CLICK)
 
 Dim indice
-If (Index And &H1) = 0 Then
+If (index And &H1) = 0 Then
     If Alocados > 0 Then
-        indice = Index \ 2 + 1
+        indice = index \ 2 + 1
         If indice > NUMSKILLS Then indice = NUMSKILLS
-        If val(Text1(indice).Caption) < MAXSKILLPOINTS Then
-            Text1(indice).Caption = val(Text1(indice).Caption) + 1
+        If Val(Text1(indice).Caption) < MAXSKILLPOINTS Then
+            Text1(indice).Caption = Val(Text1(indice).Caption) + 1
             flags(indice) = flags(indice) + 1
             Alocados = Alocados - 1
         End If
@@ -1264,9 +1264,9 @@ If (Index And &H1) = 0 Then
 Else
     If Alocados < SkillPoints Then
         
-        indice = Index \ 2 + 1
-        If val(Text1(indice).Caption) > 0 And flags(indice) > 0 Then
-            Text1(indice).Caption = val(Text1(indice).Caption) - 1
+        indice = index \ 2 + 1
+        If Val(Text1(indice).Caption) > 0 And flags(indice) > 0 Then
+            Text1(indice).Caption = Val(Text1(indice).Caption) - 1
             flags(indice) = flags(indice) - 1
             Alocados = Alocados + 1
         End If
@@ -1316,10 +1316,10 @@ Private Sub Image1_Click()
     For i = 1 To NUMSKILLS
         skillChanges(i) = CByte(Text1(i).Caption) - UserSkills(i)
         'Actualizamos nuestros datos locales
-        UserSkills(i) = val(Text1(i).Caption)
+        UserSkills(i) = Val(Text1(i).Caption)
     Next i
     
-    'call writeModifySkills(skillChanges())
+    Call WriteModifySkills(skillChanges())
     
     If Alocados = 0 Then frmMain.Label1.Visible = False
     SkillPoints = Alocados

@@ -224,7 +224,7 @@ If Not MiMensaje(0).Visible Then
     Label1.Visible = True
     Label2.Visible = True
 Else
-    'call writeForumPost(MiMensaje(0).Text, Left$(MiMensaje(1).Text, 450))
+    Call WriteForumPost(MiMensaje(0).Text, Left$(MiMensaje(1).Text, 450))
     List.AddItem MiMensaje(0).Text
     Load Text(List.ListCount)
     Text(List.ListCount - 1).Text = MiMensaje(1).Text
@@ -267,11 +267,11 @@ End Sub
 
 Private Sub List_Click()
 List.Visible = False
-Text(List.ListIndex).Visible = True
+Text(List.listIndex).Visible = True
 
 End Sub
 
-Private Sub MiMensaje_Change(Index As Integer)
+Private Sub MiMensaje_Change(index As Integer)
 If Len(MiMensaje(0).Text) <> 0 And Len(MiMensaje(1).Text) <> 0 Then
 Command1.Enabled = True
 End If

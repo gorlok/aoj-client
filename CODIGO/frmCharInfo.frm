@@ -303,9 +303,9 @@ End Enum
 Public frmType As CharInfoFrmType
 
 Private Sub Aceptar_Click()
-    'call writeGuildAcceptNewMember(Trim$(Right$(Nombre, Len(Nombre) - 8)))
+    Call WriteGuildAcceptNewMember(Trim$(Right$(Nombre, Len(Nombre) - 8)))
     Unload frmGuildLeader
-    'call writeRequestGuildLeaderInfo
+    Call WriteRequestGuildLeaderInfo
     Unload Me
 End Sub
 
@@ -314,13 +314,13 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub desc_Click()
-    'call writeGuildRequestJoinerInfo(Right$(Nombre, Len(Nombre) - 8))
+    Call WriteGuildRequestJoinerInfo(Right$(Nombre, Len(Nombre) - 8))
 End Sub
 
 Private Sub Echar_Click()
-    'call writeGuildKickMember(Right$(Nombre, Len(Nombre) - 8))
+    Call WriteGuildKickMember(Right$(Nombre, Len(Nombre) - 8))
     Unload frmGuildLeader
-    'call writeRequestGuildLeaderInfo
+    Call WriteRequestGuildLeaderInfo
     Unload Me
 End Sub
 

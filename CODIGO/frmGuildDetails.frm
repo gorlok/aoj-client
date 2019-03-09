@@ -250,9 +250,9 @@ Private Sub Command1_Click(Index As Integer)
             Next k
     
             If CreandoClan Then
-                'call writeCreateNewGuild(fdesc, ClanName, Site, Codex)
+                Call WriteCreateNewGuild(fdesc, ClanName, Site, Codex)
             Else
-                'call writeClanCodexUpdate(fdesc, Codex)
+                Call WriteClanCodexUpdate(fdesc, Codex)
             End If
 
             CreandoClan = False

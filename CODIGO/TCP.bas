@@ -58,9 +58,9 @@ End Function
 
 Sub Login()
     If EstadoLogin = E_MODO.Normal Then
-        Call Protocol.writeLoginExistingChar
+        Call WriteLoginExistingChar
     ElseIf EstadoLogin = E_MODO.CrearNuevoPj Then
-        Call writeCharacterCreate(UserName, UserPassword, frmCrearPersonaje.lstRaza.Text, UserSexo, (frmCrearPersonaje.lstProfesion.Text), UserEmail, frmCrearPersonaje.lstHogar.Text)
+        Call WriteLoginNewChar
     End If
     
     DoEvents

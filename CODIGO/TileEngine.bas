@@ -121,7 +121,7 @@ End Type
 
 'Lista de cabezas
 Public Type HeadData
-    head(E_Heading.NORTH To E_Heading.WEST) As Grh
+    Head(E_Heading.NORTH To E_Heading.WEST) As Grh
 End Type
 
 'Lista de las animaciones de las armas
@@ -143,8 +143,8 @@ Public Type Char
     
     iHead As Integer
     iBody As Integer
-    body As BodyData
-    head As HeadData
+    Body As BodyData
+    Head As HeadData
     Casco As HeadData
     Arma As WeaponAnimData
     Escudo As ShieldAnimData
@@ -374,11 +374,11 @@ Sub CargarCabezas()
     For i = 1 To Numheads
         Get #N, , Miscabezas(i)
         
-        If Miscabezas(i).head(1) Then
-            Call InitGrh(HeadData(i).head(1), Miscabezas(i).head(1), 0)
-            Call InitGrh(HeadData(i).head(2), Miscabezas(i).head(2), 0)
-            Call InitGrh(HeadData(i).head(3), Miscabezas(i).head(3), 0)
-            Call InitGrh(HeadData(i).head(4), Miscabezas(i).head(4), 0)
+        If Miscabezas(i).Head(1) Then
+            Call InitGrh(HeadData(i).Head(1), Miscabezas(i).Head(1), 0)
+            Call InitGrh(HeadData(i).Head(2), Miscabezas(i).Head(2), 0)
+            Call InitGrh(HeadData(i).Head(3), Miscabezas(i).Head(3), 0)
+            Call InitGrh(HeadData(i).Head(4), Miscabezas(i).Head(4), 0)
         End If
     Next i
     
@@ -408,11 +408,11 @@ Sub CargarCascos()
     For i = 1 To NumCascos
         Get #N, , Miscabezas(i)
         
-        If Miscabezas(i).head(1) Then
-            Call InitGrh(CascoAnimData(i).head(1), Miscabezas(i).head(1), 0)
-            Call InitGrh(CascoAnimData(i).head(2), Miscabezas(i).head(2), 0)
-            Call InitGrh(CascoAnimData(i).head(3), Miscabezas(i).head(3), 0)
-            Call InitGrh(CascoAnimData(i).head(4), Miscabezas(i).head(4), 0)
+        If Miscabezas(i).Head(1) Then
+            Call InitGrh(CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0)
+            Call InitGrh(CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0)
+            Call InitGrh(CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0)
+            Call InitGrh(CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0)
         End If
     Next i
     
@@ -441,11 +441,11 @@ Sub CargarCuerpos()
     For i = 1 To NumCuerpos
         Get #N, , MisCuerpos(i)
         
-        If MisCuerpos(i).body(1) Then
-            InitGrh BodyData(i).Walk(1), MisCuerpos(i).body(1), 0
-            InitGrh BodyData(i).Walk(2), MisCuerpos(i).body(2), 0
-            InitGrh BodyData(i).Walk(3), MisCuerpos(i).body(3), 0
-            InitGrh BodyData(i).Walk(4), MisCuerpos(i).body(4), 0
+        If MisCuerpos(i).Body(1) Then
+            InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
+            InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
+            InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
+            InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
             
             BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
             BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
@@ -535,13 +535,10 @@ Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef 
     tY = UserPos.y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
 End Sub
 
-Sub MakeChar(ByVal CharIndex As Integer, ByVal body As Integer, ByVal head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
-
-
+Sub MakeChar(ByVal CharIndex As Integer, ByVal Body As Integer, ByVal Head As Integer, ByVal Heading As Byte, ByVal x As Integer, ByVal y As Integer, ByVal Arma As Integer, ByVal Escudo As Integer, ByVal Casco As Integer)
+On Error Resume Next
     'Apuntamos al ultimo Char
     If CharIndex > LastChar Then LastChar = CharIndex
-    
-    If charlist(CharIndex).Active Then Exit Sub
     
     With charlist(CharIndex)
         'If the char wasn't allready active (we are rewritting it) don't increase char count
@@ -552,10 +549,10 @@ Sub MakeChar(ByVal CharIndex As Integer, ByVal body As Integer, ByVal head As In
         If Escudo = 0 Then Escudo = 2
         If Casco = 0 Then Casco = 2
         
-        .iHead = head
-        .iBody = body
-        .head = HeadData(head)
-        .body = BodyData(body)
+        .iHead = Head
+        .iBody = Body
+        .Head = HeadData(Head)
+        .Body = BodyData(Body)
         .Arma = WeaponAnimData(Arma)
         
         .Escudo = ShieldAnimData(Escudo)
@@ -563,12 +560,10 @@ Sub MakeChar(ByVal CharIndex As Integer, ByVal body As Integer, ByVal head As In
         
         .Heading = Heading
         
-        'Reset moving stats if char not exists
-        'If .Active < 1 Then
-         .Moving = 0
-         .MoveOffsetX = 0
-         .MoveOffsetY = 0
-      '  End If
+        'Reset moving stats
+        .Moving = 0
+        .MoveOffsetX = 0
+        .MoveOffsetY = 0
         
         'Update position
         .Pos.x = x
@@ -576,15 +571,10 @@ Sub MakeChar(ByVal CharIndex As Integer, ByVal body As Integer, ByVal head As In
         
         'Make active
         .Active = 1
-        
-        If Len(.Nombre) > 0 Then Debug.Print "make user: " & .Nombre & " Pos Y: " & .Pos.y
-        
     End With
     
     'Plot on map
-     MapData(x, y).CharIndex = CharIndex
-     If CharIndex = UserCharIndex Then Debug.Print MapData(x, y).CharIndex
-
+    MapData(x, y).CharIndex = CharIndex
 End Sub
 
 Sub ResetCharInfo(ByVal CharIndex As Integer)
@@ -614,8 +604,6 @@ Sub EraseChar(ByVal CharIndex As Integer)
 '*****************************************************************
 On Error Resume Next
     charlist(CharIndex).Active = 0
-    
-    Debug.Print "Name erase: " & charlist(CharIndex).Nombre
     
     'Update lastchar
     If CharIndex = LastChar Then
@@ -714,15 +702,13 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     End With
     
     If UserEstado = 0 Then Call DoPasosFx(CharIndex)
-
+    
     'areas viejos
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
         If CharIndex <> UserCharIndex Then
             Call EraseChar(CharIndex)
         End If
     End If
-    
-
 End Sub
 
 Public Sub DoFogataFx()
@@ -766,16 +752,12 @@ Sub DoPasosFx(ByVal CharIndex As Integer)
 End Sub
 
 Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As Integer)
-
-If CharIndex = UserCharIndex And UserParalizado Then Exit Sub
-If CharIndex = UserCharIndex And UserMeditar Then Exit Sub
-
+On Error Resume Next
     Dim x As Integer
     Dim y As Integer
     Dim addX As Integer
     Dim addY As Integer
     Dim nHeading As E_Heading
-    
     
     With charlist(CharIndex)
         x = .Pos.x
@@ -801,12 +783,11 @@ If CharIndex = UserCharIndex And UserMeditar Then Exit Sub
         .Pos.x = nX
         .Pos.y = nY
         
-        .Heading = nHeading
-        
         .MoveOffsetX = -1 * (TilePixelWidth * addX)
         .MoveOffsetY = -1 * (TilePixelHeight * addY)
         
         .Moving = 1
+        .Heading = nHeading
         
         .scrollDirectionX = Sgn(addX)
         .scrollDirectionY = Sgn(addY)
@@ -817,24 +798,17 @@ If CharIndex = UserCharIndex And UserMeditar Then Exit Sub
         End If
     End With
     
-    If Not EstaPCarea(CharIndex) Then
-       Call Dialogos.RemoveDialog(CharIndex)
-    End If
+    If Not EstaPCarea(CharIndex) Then Call Dialogos.RemoveDialog(CharIndex)
     
     If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
         Call EraseChar(CharIndex)
     End If
-
 End Sub
 
 Sub MoveScreen(ByVal nHeading As E_Heading)
 '******************************************
 'Starts the screen moving in a direction
 '******************************************
-
-If UserParalizado Then Exit Sub
-If UserMeditar Then Exit Sub
-
     Dim x As Integer
     Dim y As Integer
     Dim tX As Integer
@@ -1860,8 +1834,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, ByVal DisplayFormLeft As Inte
             Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
         End If
         
-        If IScombate Then Call RenderText(260, 280, "MODO COMBATE", vbRed, frmMain.font)
-        Call RenderText(260, 260, "FPS: " & FPS, vbWhite, frmMain.font)
+        If IScombate Then Call RenderText(260, 260, "MODO COMBATE", vbRed, frmMain.font)
         
         Call Dialogos.Render
         Call DibujarCartel
@@ -1990,15 +1963,18 @@ Private Function GetElapsedTime() As Single
     Call QueryPerformanceCounter(start_time)
     
     'Calculate elapsed time
-    GetElapsedTime = (start_time - end_time) / timer_freq * 950
+    GetElapsedTime = (start_time - end_time) / timer_freq * 1000
     
     'Get next end time
     Call QueryPerformanceCounter(end_time)
 End Function
 
 Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
-On Error GoTo Err
-
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 12/03/04
+'Draw char's to screen without offcentering them
+'***************************************************
     Dim moved As Boolean
     Dim Pos As Integer
     Dim line As String
@@ -2012,8 +1988,8 @@ On Error GoTo Err
                 
                 'Start animations
 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .body.Walk(.Heading).Speed > 0 Then _
-                    .body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then _
+                    .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -2034,8 +2010,8 @@ On Error GoTo Err
                 
                 'Start animations
 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .body.Walk(.Heading).Speed > 0 Then _
-                    .body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then _
+                    .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -2054,8 +2030,8 @@ On Error GoTo Err
         'If done moving stop animation
         If Not moved Then
             'Stop animations
-            .body.Walk(.Heading).Started = 0
-            .body.Walk(.Heading).FrameCounter = 1
+            .Body.Walk(.Heading).Started = 0
+            .Body.Walk(.Heading).FrameCounter = 1
             
             .Arma.WeaponWalk(.Heading).Started = 0
             .Arma.WeaponWalk(.Heading).FrameCounter = 1
@@ -2069,19 +2045,19 @@ On Error GoTo Err
         PixelOffsetX = PixelOffsetX + .MoveOffsetX
         PixelOffsetY = PixelOffsetY + .MoveOffsetY
         
-        If .head.head(.Heading).GrhIndex Then
+        If .Head.Head(.Heading).GrhIndex Then
             If Not .invisible Then
                 'Draw Body
-                If .body.Walk(.Heading).GrhIndex Then _
-                    Call DDrawTransGrhtoSurface(.body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+                If .Body.Walk(.Heading).GrhIndex Then _
+                    Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
             
                 'Draw Head
-                If .head.head(.Heading).GrhIndex Then
-                    Call DDrawTransGrhtoSurface(.head.head(.Heading), PixelOffsetX + .body.HeadOffset.x, PixelOffsetY + .body.HeadOffset.y, 1, 0)
+                If .Head.Head(.Heading).GrhIndex Then
+                    Call DDrawTransGrhtoSurface(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
                     
                     'Draw Helmet
-                    If .Casco.head(.Heading).GrhIndex Then _
-                        Call DDrawTransGrhtoSurface(.Casco.head(.Heading), PixelOffsetX + .body.HeadOffset.x, PixelOffsetY + .body.HeadOffset.y, 1, 0)
+                    If .Casco.Head(.Heading).GrhIndex Then _
+                        Call DDrawTransGrhtoSurface(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, 1, 0)
                     
                     'Draw Weapon
                     If .Arma.WeaponWalk(.Heading).GrhIndex Then _
@@ -2094,8 +2070,7 @@ On Error GoTo Err
                 
                     'Draw name over head
                     If LenB(.Nombre) > 0 Then
-                        'If Nombres And esGM(UserCharIndex) Or Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
-                         If Nombres Then
+                        If Nombres And esGM(UserCharIndex) Or Abs(MouseTileX - .Pos.x) < 2 And (Abs(MouseTileY - .Pos.y)) < 2 Then
                             Pos = getTagPosition(.Nombre)
                             'Pos = InStr(.Nombre, "<")
                             'If Pos = 0 Then Pos = Len(.Nombre) + 2
@@ -2123,13 +2098,13 @@ On Error GoTo Err
             End If
         Else
             'Draw Body
-            If .body.Walk(.Heading).GrhIndex Then _
-                Call DDrawTransGrhtoSurface(.body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
+            If .Body.Walk(.Heading).GrhIndex Then _
+                Call DDrawTransGrhtoSurface(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, 1)
         End If
 
         
         'Update dialogs
-        Call Dialogos.UpdateDialogPos(PixelOffsetX + .body.HeadOffset.x, PixelOffsetY + .body.HeadOffset.y, CharIndex)
+        Call Dialogos.UpdateDialogPos(PixelOffsetX + .Body.HeadOffset.x, PixelOffsetY + .Body.HeadOffset.y, CharIndex)
         
         'Draw FX
         If .FxIndex <> 0 Then
@@ -2144,10 +2119,6 @@ On Error GoTo Err
                 .FxIndex = 0
         End If
     End With
-    
-    Exit Sub
-Err:
-Debug.Print "Error"
 End Sub
 
 Public Sub SetCharacterFx(ByVal CharIndex As Integer, ByVal fX As Integer, ByVal Loops As Integer)
