@@ -1525,7 +1525,8 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
                 'Layer 4 **********************************
                 If MapData(x, y).Graphic(4).GrhIndex Then
                     'Draw
-                    Call DDrawTransGrhtoSurface(MapData(x, y).Graphic(4), _
+                    '                    Call DDrawTransGrhtoSurface(MapData(x, y).Graphic(4),
+                    Call DDrawGrhtoSurface(MapData(x, y).Graphic(4), _
                         (ScreenX - 1) * TilePixelWidth + PixelOffsetX, _
                         (ScreenY - 1) * TilePixelHeight + PixelOffsetY, _
                         1, 1)

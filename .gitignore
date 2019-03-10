@@ -331,3 +331,5 @@ ASALocalRun/
 
 
 *.log
+
+Thumbs.db*
