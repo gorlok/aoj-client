@@ -1428,6 +1428,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     End If
     
     If screenmaxY < YMaxMapSize Then screenmaxY = screenmaxY + 1
+    If screenmaxY > YMaxMapSize Then screenmaxY = YMaxMapSize 'gorlok
     
     If screenminX > XMinMapSize Then
         screenminX = screenminX - 1
@@ -1437,6 +1438,7 @@ Sub RenderScreen(ByVal tilex As Integer, ByVal tiley As Integer, ByVal PixelOffs
     End If
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
+    If screenmaxX > XMaxMapSize Then screenmaxX = XMaxMapSize 'gorlok
     
     'Draw floor layer
     For y = screenminY To screenmaxY

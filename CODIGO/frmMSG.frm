@@ -159,7 +159,7 @@ End Sub
 
 Private Sub list1_Click()
 Dim ind As Integer
-ind = Val(ReadField(2, List1.List(List1.listIndex), Asc("-")))
+ind = Val(ReadField(2, List1.List(List1.ListIndex), Asc("-")))
 End Sub
 
 Private Sub List1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
@@ -170,32 +170,36 @@ End If
 End Sub
 
 Private Sub mnuBorrar_Click()
-    If List1.listIndex < 0 Then Exit Sub
+    If List1.ListIndex < 0 Then Exit Sub
     'Pablo (ToxicWaste)
-    Dim aux As String
-    aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
-    Call WriteSOSRemove(aux)
+    'Dim aux As String
+    'aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
+    'Call WriteSOSRemove(aux)
     '/Pablo (ToxicWaste)
     'Call WriteSOSRemove(List1.List(List1.listIndex))
     
-    List1.RemoveItem List1.listIndex
+    Call WriteSOSRemove(List1.List(List1.ListIndex))
+    List1.RemoveItem List1.ListIndex
 End Sub
 
 Private Sub mnuIR_Click()
     'Pablo (ToxicWaste)
-    Dim aux As String
-    aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
-    Call WriteGoToChar(aux)
+    'Dim aux As String
+    'aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
+    'Call WriteGoToChar(aux)
     '/Pablo (ToxicWaste)
     'Call WriteGoToChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
     
+    Call WriteGoToChar(List1.List(List1.ListIndex))
 End Sub
 
 Private Sub mnutraer_Click()
     'Pablo (ToxicWaste)
-    Dim aux As String
-    aux = mid$(ReadField(1, List1.List(List1.listIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.listIndex), Asc("-"))))
-    Call WriteSummonChar(aux)
+    'Dim aux As String
+    'aux = mid$(ReadField(1, List1.List(List1.ListIndex), Asc("-")), 10, Len(ReadField(1, List1.List(List1.ListIndex), Asc("-"))))
+    'Call WriteSummonChar(aux)
     'Pablo (ToxicWaste)
     'Call WriteSummonChar(ReadField(1, List1.List(List1.listIndex), Asc("-")))
+    
+    Call WriteSummonChar(List1.List(List1.ListIndex))
 End Sub
